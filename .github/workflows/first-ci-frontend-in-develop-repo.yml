@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     
     - name: Login to Docker Hub
       env:
@@ -25,8 +25,7 @@ jobs:
     
     - name: Build the container image
       run: |
-       cd coit-frontend
-       docker build -t tamishk/coit-frontend:firstongithubactions -f Dockerfile-multistage
+       docker build coit-frontend -t tamishk/coit-frontend:firstongithubactions -f coit-frontend/Dockerfile-multistage
 
     - name: Push the container image
       run: |
