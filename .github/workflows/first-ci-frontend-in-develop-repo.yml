@@ -1,0 +1,32 @@
+name: First CI Frontend in Develop Repositories on Github
+
+on:
+  push:
+    branches: [ "develop" ]
+  pull_request:
+    branches: [ "develop" ]
+    
+  # Allows you to run this worflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  buildandpush:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Login to Docker Hub
+      env:
+        DOCKERHUB_USERNAME: ${{ vars.DOCKERHUB_USERNAME }}
+        DOCKERHUB_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
+      run: |
+        docker login - u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD
+    
+    - name: Build the container image
+      run: |
+       docker build coit-frontend -t tamishk/coit-frontend:firstongithubactions -f Dockerfile-multistage
+
+    - name: Push the container image
+      run: |
+        docker push tamishk/coit-frontend:firstongithubactions
