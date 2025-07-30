@@ -25,7 +25,8 @@ jobs:
     
     - name: Build the container image
       run: |
-       docker build coit-frontend -t tamishk/coit-frontend:firstongithubactions -f Dockerfile-multistage
+       cd coit-frontend
+       docker build -t tamishk/coit-frontend:firstongithubactions -f Dockerfile-multistage
 
     - name: Push the container image
       run: |
